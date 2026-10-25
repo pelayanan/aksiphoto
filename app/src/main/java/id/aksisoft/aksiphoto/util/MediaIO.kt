@@ -54,7 +54,8 @@ object MediaIO {
         }
 
     fun galleryImages(context: Context): List<GalleryImage> {
-        return queryImages(context, PicturesRel, false)
+        // Semua foto: tanpa filter relPath (folder AksiPhoto ditampilkan lewat myImages()).
+        return queryImages(context, null, false)
     }
 
     /** File milik AksiPhoto (Pictures/AksiPhoto). */
