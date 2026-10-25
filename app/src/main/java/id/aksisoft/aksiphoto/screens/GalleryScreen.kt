@@ -46,9 +46,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import id.aksisoft.aksiphoto.util.EditorSession
 import id.aksisoft.aksiphoto.util.GalleryImage
 import id.aksisoft.aksiphoto.util.MediaIO
 import id.aksisoft.aksiphoto.ui.BgDark
@@ -84,10 +85,31 @@ fun GalleryScreen(nav: NavHostController) {
         if (granted) reload() else permLauncher.launch(perm)
     }
 
+    // Muat ulang saat kembali ke galeri (mis. foto dihapus lewat viewer)
+    val lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+    androidx.compose.runtime.DisposableEffect(mine == 1) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                val permOk = ContextCompat.checkSelfPermission(
+                    ctx,
+                    if (Build.VERSION.SDK_INT >= 33) {
+                        Manifest.permission.READ_MEDIA_IMAGES
+                    } else {
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    },
+                ) == PackageManager.PERMISSION_GRANTED
+                if (permOk) reload()
+            }
+        }
+        val lifecycle = lifecycleOwner.lifecycle
+        lifecycle.addObserver(observer)
+        onDispose { lifecycle.removeObserver(observer) }
+    }
+
     fun open(img: GalleryImage) {
-        EditorSession.sourceUri = img.uri
-        EditorSession.sourceName = img.name
-        nav.navigate("editor")
+        ViewerSession.images = images
+        ViewerSession.startIndex = images.indexOfFirst { it.uri == img.uri }.coerceAtLeast(0)
+        nav.navigate("viewer")
     }
 
     Scaffold(

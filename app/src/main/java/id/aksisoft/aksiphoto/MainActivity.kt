@@ -18,6 +18,7 @@ import id.aksisoft.aksiphoto.screens.HomeScreen
 import id.aksisoft.aksiphoto.screens.SettingsScreen
 import id.aksisoft.aksiphoto.screens.SplashScreen
 import id.aksisoft.aksiphoto.screens.OnboardingScreen
+import id.aksisoft.aksiphoto.screens.ViewerScreen
 import id.aksisoft.aksiphoto.ui.AksiPhotoTheme
 
 class MainActivity : ComponentActivity() {
@@ -40,6 +41,7 @@ fun AksiPhotoNavHost(nav: NavHostController) {
         composable("onboarding") { OnboardingScreen(nav) }
         composable("home") { HomeScreen(nav) }
         composable("gallery") { GalleryScreen(nav) }
+        composable("viewer") { ViewerScreen(nav) }
         composable("editor") { EditorScreen(nav) }
         composable("export") { ExportScreen(nav) }
         composable("batch") { BatchScreen(nav) }

@@ -2,6 +2,10 @@
 Repo: https://github.com/pelayanan/aksiphoto
 Project: AksiPhoto — Open Source Image Editor Android (Kotlin + Jetpack Compose)
 Package: id.aksisoft.aksiphoto | alias key: tukangdigital | pass: MakMakPandugo
+Versi terkini: v1.2.0 (versionCode 6) — lihat SESSION 2
+Build tooling: JAVA_HOME default JVM 21 → WAJIB org.gradle.java.home java-17
+  (file gradle.properties repo sudah menunjuk java-17; jangan diubah)
+  ANDROID_HOME=/opt/sdk, Gradle: /opt/gradle/bin/gradle
 
 ---
 
@@ -38,3 +42,45 @@ Package: id.aksisoft.aksiphoto | alias key: tukangdigital | pass: MakMakPandugo
 
 ### status
 Selesai — tidak ada build baru diperlukan. Menunggu request perubahan berikutnya.
+
+---
+
+## [SESSION 2 — 25 Oktober 2026]
+
+### permintaan user
+- Dari galeri: klik gambar harus membuka viewer dulu (zoom, swipe kiri/kanan,
+  share, dll), baru tombol Edit masuk editor.
+
+### implementasi (v1.2.0, versionCode 6)
+- **ViewerScreen.kt BARU** (screens/ViewerScreen.kt):
+  - Zoom pinch 1x–6x + panning saat zoom, double-tap toggle 2.5x, tap = show/hide bar
+  - HorizontalPager: swipe kiri-kanan antar foto, counter "n/N" + nama file di top bar
+  - Aksi bawah: Bagikan (FileProvider ACTION_SEND), Info (dialog nama/tanggal/sumber),
+    Edit (set EditorSession → editor), Hapus (createDeleteRequest Android R+
+    / delete langsung di bawah R; list otomatis diperbarui)
+- **GalleryScreen.kt**: klik grid → ViewerSession.images + startIndex → route "viewer";
+  tambah lifecycle observer ON_RESUME → reload (foto terhapus dari viewer langsung hilang)
+- **MainActivity.kt**: register route composable("viewer")
+- VersionCode 5 → 6, versionName 1.1.3 → 1.2.0
+- gradle.properties: org.gradle.java.home diganti java-21 → kembali java-17
+  (JdkImageTransform jmod gagal di JDK 21; JDK 17 diinstal via apt)
+
+### build
+- assembleDebug: sukses
+- assembleRelease + bundleRelease (R8 minify + shrinkResources): sukses
+- Artefak ditimpa di root repo (nama tidak berubah):
+  - AksiPhoto-release.apk — versionCode 6, versionName 1.2.0, target/compile SDK 36, signed
+  - AksiPhoto-release.aab
+- Toolchain dipasang ulang di session ini: /opt/gradle (Gradle 8.14.3),
+  /opt/sdk (platform-tools, platforms;android-36, build-tools;36.0.0, build-tools;35 resolved AGP)
+
+### screenshot (kirim ke Telegram)
+- store/screenshots/07_viewer.png — halaman viewer baru
+- store/screenshots/08_viewer_zoom.png — keadaan zoom 2.5x + panning
+- store/screenshots/09_gallery_flow.png — alur galeri → viewer
+  (mockup PNG karena container tanpa KVM/emulator; render html-ke-png style yang sama)
+
+### status
+Selesai + push github. File baru: ViewerScreen.kt, 3 screenshot; file berubah:
+GalleryScreen.kt, MainActivity.kt, app/build.gradle, gradle.properties,
+docs/IMPLEMENTATION.md, session.txt, artefak apk/aab ditimpa.

@@ -8,7 +8,11 @@ pada build saat ini (Kotlin + Jetpack Compose, minSdk 26, targetSdk 36).
 - **OnboardingScreen** — 3 slide (Edit Pro, Seret & Oles, Offline & Lokal)
 - **HomeScreen** — quick action: Galeri, Kamera (MediaStore pending uri), Foto Baru
   (kanvas baru), Folder Saya, Batch Proses + strip foto terbaru
-- **GalleryScreen** — grid MediaStore + chip Semua Foto / Folder AksiPhoto
+- **GalleryScreen** — grid MediaStore + chip Semua Foto / Folder AksiPhoto,
+  klik gambar membuka **ViewerScreen** (bukan langsung editor)
+- **ViewerScreen** — viewer layar penuh: pinch zoom (1x–6x) + double-tap 2.5x,
+  geser/panning saat zoom, swipe kiri-kanan antar foto, tap = sembunyikan bar,
+  aksi: Bagikan, Info, Edit (masuk editor), Hapus (dialog sistem Android R+)
 - **EditorScreen** — Kanvas Compose:
   - Kuas (warna 8 pilihan, ukuran slider)
   - Penghapus (restore piksel asli via BitmapShader)
