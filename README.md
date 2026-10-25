@@ -6,11 +6,11 @@ Aplikasi Android untuk mengelola & mengedit foto: **Grid Galeri**, **Kamera**, *
 ## Teknis
 | Item | Nilai |
 |---|---|
-| Package | `com.pelayanan.aksiphoto` |
-| Min SDK | 24 (Android 7.0) |
+| Package | `id.aksisoft.aksiphoto` |
+| Min SDK | 26 (Android 8.0) |
 | Target/Compile SDK | 36 (Android 16) — sesuai kebijakan Play Console 2026 |
-| VersionCode | 1 |
-| VersionName | 1.0.0 |
+| VersionCode | 3 |
+| VersionName | 1.1.1 |
 | Signing | `keystore/tukangdigital.keystore` alias `tukangdigital` |
 | Release build | R8 minify + shrinkResources aktif |
 
@@ -21,7 +21,7 @@ Aplikasi Android untuk mengelola & mengedit foto: **Grid Galeri**, **Kamera**, *
 
 ## Struktur
 ```
-app/src/main/java/com/pelayanan/aksiphoto/
+app/src/main/java/id/aksisoft/aksiphoto/
   MainActivity.kt      — galeri grid + kamera
   ViewerActivity.kt    — pratinjau, Terang+, bagikan, hapus
   PhotoRepository.kt   — MediaStore loader
