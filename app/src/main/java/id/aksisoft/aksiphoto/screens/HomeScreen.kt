@@ -61,6 +61,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -115,6 +118,26 @@ fun HomeScreen(nav: NavHostController) {
         val granted = ContextCompat.checkSelfPermission(ctx, perm) ==
             PackageManager.PERMISSION_GRANTED
         if (granted) reload() else permLauncher.launch(perm)
+    }
+
+    // Muat ulang strip foto terbaru saat kembali ke Home
+    // (mis. setelah Batch selesai / export / hapus dari viewer)
+    val lifecycleOwner = LocalLifecycleOwner.current
+    androidx.compose.runtime.DisposableEffect(Unit) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                val perm = if (Build.VERSION.SDK_INT >= 33) {
+                    Manifest.permission.READ_MEDIA_IMAGES
+                } else {
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                }
+                val permOk = ContextCompat.checkSelfPermission(ctx, perm) ==
+                    PackageManager.PERMISSION_GRANTED
+                if (permOk) reload()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
 
     fun takePhoto() {

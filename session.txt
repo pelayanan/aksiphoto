@@ -84,3 +84,35 @@ Selesai — tidak ada build baru diperlukan. Menunggu request perubahan berikutn
 Selesai + push github. File baru: ViewerScreen.kt, 3 screenshot; file berubah:
 GalleryScreen.kt, MainActivity.kt, app/build.gradle, gradle.properties,
 docs/IMPLEMENTATION.md, session.txt, artefak apk/aab ditimpa.
+
+---
+
+## [SESSION 3 — 25 Oktober 2026]
+
+### laporan user
+- Setelah Batch Proses selesai, strip "Foto terbaru" di Home tidak refresh
+  (dan daftar di Batch/Files tidak menampilkan foto batch yang baru dibuat).
+
+### akar masalah
+- HomeScreen & FilesScreen hanya memuat daftar sekali via LaunchedEffect(Unit);
+  tidak ada refresh saat kembali ke layar tersebut.
+
+### perbaikan (v1.2.1, versionCode 7)
+- HomeScreen: observer ON_RESUME (LifecycleEventObserver) → reload strip
+  "Foto terbaru" setiap kembali ke Home (batch/ekspor/kamera/hapus)
+- FilesScreen: observer ON_RESUME → reload daftar "Folder Saya"
+- BatchScreen: setelah batch sukses → tunggu 350ms (indexing MediaStore)
+  lalu refresh daftar agar foto batch_... langsung muncul
+- Pola ON_RESUME sama seperti GalleryScreen di session 2
+
+### build
+- assembleDebug: sukses; assembleRelease + bundleRelease (R8): sukses
+- Artefak ditimpa root repo: AksiPhoto-release.apk / AksiPhoto-release.aab
+  (versionCode 7, versionName 1.2.1, target/compile SDK 36)
+
+### screenshot (kirim ke Telegram)
+- store/screenshots/10_batch_refresh.png — batch selesai + refresh otomatis daftar
+- store/screenshots/11_home_terbaru.png — Home strip "Foto terbaru" selalu update
+
+### status
+Selesai + push github.

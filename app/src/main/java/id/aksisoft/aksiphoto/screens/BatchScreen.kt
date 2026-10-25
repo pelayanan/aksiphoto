@@ -138,6 +138,11 @@ fun BatchScreen(nav: NavHostController) {
                 "Batch selesai: " + ok + "/" + chosen.size + " foto tersimpan di Pictures/AksiPhoto",
                 Toast.LENGTH_LONG,
             ).show()
+            if (ok > 0) {
+                // Refresh agar foto batch yang baru tersimpan langsung terlihat
+                withContext(Dispatchers.IO) { kotlinx.coroutines.delay(350) }
+                images = MediaIO.galleryImages(ctx)
+            }
         }
     }
 

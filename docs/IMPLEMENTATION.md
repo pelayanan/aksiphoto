@@ -25,7 +25,8 @@ pada build saat ini (Kotlin + Jetpack Compose, minSdk 26, targetSdk 36).
 - **ExportScreen** — format JPG/PNG/WebP, kualitas kompresi, resolusi
   (asli/2048/1080/720), simpan ke Pictures/AksiPhoto + Bagikan
 - **BatchProcessingScreen** — multi-pilih, resize lebar, kualitas, konversi format,
-  progress bar, semua hasil tersimpan Pictures/AksiPhoto
+  progress bar, semua hasil tersimpan Pictures/AksiPhoto; daftar di-refresh
+  otomatis setelah batch selesai
 - **FileManagerScreen** — browser Pictures/AksiPhoto: edit ulang, bagikan, hapus
   (dialog konfirmasi sistem Android R+)
 - **SettingsScreen** — kualitas simpan bawaan, bersihkan cache, catatan privasi
