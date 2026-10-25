@@ -116,3 +116,33 @@ docs/IMPLEMENTATION.md, session.txt, artefak apk/aab ditimpa.
 
 ### status
 Selesai + push github.
+
+---
+
+## [SESSION 4 — 25 Oktober 2026]
+
+### permintaan user
+- Viewer: jangan ada tombol Hapus langsung di bar bawah; menu bawah jadi menu
+  titik-tiga (⋯) di kanan atas, klik → dropdown; wajib ada konfirmasi (notif)
+  sebelum menghapus.
+
+### implementasi (v1.2.2, versionCode 8)
+- ViewerScreen: bar aksi bawah DIHAPUS total
+- IconButton MoreVert (⋮) di top bar kanan atas → DropdownMenu material3:
+  Edit / Bagikan / Info / Hapus (merah)
+- Klik Hapus → TIDAK langsung menghapus; buka dialog konfirmasi "Hapus foto?"
+  (Batal / Hapus); Android R+ lanjut ke dialog sistem createDeleteRequest
+- Catatan tooling: material3 BOM 2024.06 — DropdownMenu belum punya param
+  containerColor (baru di m3 1.3+) → pakai warna surface theme
+
+### build
+- assembleDebug: sukses; assembleRelease + bundleRelease (R8): sukses
+- Artefak ditimpa: AksiPhoto-release.apk / .aab (versionCode 8, v1.2.2, SDK 36)
+
+### screenshot (kirim ke Telegram)
+- store/screenshots/07_viewer.png — diperbarui (tanpa bar bawah)
+- store/screenshots/12_viewer_menu.png — dropdown menu ⋮ terbuka
+- store/screenshots/13_viewer_konfirmasi_hapus.png — dialog konfirmasi hapus
+
+### status
+Selesai + push github.

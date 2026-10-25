@@ -12,7 +12,8 @@ pada build saat ini (Kotlin + Jetpack Compose, minSdk 26, targetSdk 36).
   klik gambar membuka **ViewerScreen** (bukan langsung editor)
 - **ViewerScreen** — viewer layar penuh: pinch zoom (1x–6x) + double-tap 2.5x,
   geser/panning saat zoom, swipe kiri-kanan antar foto, tap = sembunyikan bar,
-  aksi: Bagikan, Info, Edit (masuk editor), Hapus (dialog sistem Android R+)
+  semua aksi melalui menu titik-tiga (⋯) kanan atas: Edit, Bagikan, Info,
+  Hapus (dengan dialog konfirmasi/notifik sebelum hapus; dialog sistem Android R+)
 - **EditorScreen** — Kanvas Compose:
   - Kuas (warna 8 pilihan, ukuran slider)
   - Penghapus (restore piksel asli via BitmapShader)

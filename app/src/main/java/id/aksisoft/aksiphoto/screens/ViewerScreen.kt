@@ -35,7 +35,10 @@ import androidx.compose.material.icons.automirrored.rounded.Send
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -107,6 +110,7 @@ fun ViewerScreen(nav: NavHostController) {
     var chromeVisible by remember { mutableStateOf(true) }
     var infoFor by remember { mutableStateOf<GalleryImage?>(null) }
     var deleteFor by remember { mutableStateOf<GalleryImage?>(null) }
+    var menuOpen by remember { mutableStateOf(false) }
 
     // Reset zoom saat pindah halaman
     LaunchedEffect(pagerState.currentPage) {
@@ -290,28 +294,64 @@ fun ViewerScreen(nav: NavHostController) {
                         fontSize = 12.sp,
                     )
                 }
-            }
-
-            // Bar Aksi
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .navigationBarsPadding()
-                    .background(Color(0x99000000))
-                    .padding(vertical = 10.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-            ) {
-                BottomAction(Icons.AutoMirrored.Rounded.Send, "Bagikan") {
-                    share(current)
+                // Menu titik tiga (⋯) — semua aksi di sini, tidak ada tombol langsung
+                Box {
+                    IconButton(onClick = { menuOpen = true }) {
+                        Icon(
+                            Icons.Rounded.MoreVert,
+                            "Menu",
+                            tint = Color.White,
+                        )
+                    }
+                    DropdownMenu(
+                        expanded = menuOpen,
+                        onDismissRequest = { menuOpen = false },
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text("Edit", color = Color.White) },
+                            leadingIcon = {
+                                Icon(Icons.Rounded.Edit, null, tint = Color.White)
+                            },
+                            onClick = {
+                                menuOpen = false
+                                EditorSession.sourceUri = current.uri
+                                EditorSession.sourceName = current.name
+                                nav.navigate("editor")
+                            },
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Bagikan", color = Color.White) },
+                            leadingIcon = {
+                                Icon(Icons.AutoMirrored.Rounded.Send, null, tint = Color.White)
+                            },
+                            onClick = {
+                                menuOpen = false
+                                share(current)
+                            },
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Info", color = Color.White) },
+                            leadingIcon = {
+                                Icon(Icons.Rounded.Info, null, tint = Color.White)
+                            },
+                            onClick = {
+                                menuOpen = false
+                                infoFor = current
+                            },
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Hapus", color = Color(0xFFFF6B6B)) },
+                            leadingIcon = {
+                                Icon(Icons.Rounded.Delete, null, tint = Color(0xFFFF6B6B))
+                            },
+                            onClick = {
+                                menuOpen = false
+                                // konfirmasi (notif) sebelum benar-benar menghapus
+                                deleteFor = current
+                            },
+                        )
+                    }
                 }
-                BottomAction(Icons.Rounded.Info, "Info") { infoFor = current }
-                BottomAction(Icons.Rounded.Edit, "Edit") {
-                    EditorSession.sourceUri = current.uri
-                    EditorSession.sourceName = current.name
-                    nav.navigate("editor")
-                }
-                BottomAction(Icons.Rounded.Delete, "Hapus") { deleteFor = current }
             }
         }
     }
@@ -352,7 +392,7 @@ fun ViewerScreen(nav: NavHostController) {
             title = { Text("Hapus foto?", color = Color.White) },
             text = {
                 Text(
-                    "${deleteFor!!.name} akan dihapus dari galeri.",
+                    "${deleteFor!!.name} akan dihapus permanen dari galeri.",
                     color = Color(0xFF9BB0C1),
                     fontSize = 14.sp,
                 )
@@ -372,22 +412,5 @@ fun ViewerScreen(nav: NavHostController) {
                 }
             },
         )
-    }
-}
-
-@Composable
-private fun BottomAction(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
-    label: String,
-    onClick: () -> Unit,
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp),
-    ) {
-        Icon(icon, label, tint = Color.White)
-        Text(label, color = Color.White, fontSize = 11.sp)
     }
 }
