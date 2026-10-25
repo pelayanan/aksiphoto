@@ -9,8 +9,8 @@ Aplikasi Android untuk mengelola & mengedit foto: **Grid Galeri**, **Kamera**, *
 | Package | `id.aksisoft.aksiphoto` |
 | Min SDK | 26 (Android 8.0) |
 | Target/Compile SDK | 36 (Android 16) — sesuai kebijakan Play Console 2026 |
-| VersionCode | 3 |
-| VersionName | 1.1.1 |
+| VersionCode | 4 |
+| VersionName | 1.1.2 |
 | Signing | `keystore/tukangdigital.keystore` alias `tukangdigital` |
 | Release build | R8 minify + shrinkResources aktif |
 

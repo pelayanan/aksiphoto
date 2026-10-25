@@ -75,7 +75,7 @@ fun AboutScreen(nav: NavHostController) {
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
             Image(
-                painter = androidx.compose.ui.res.painterResource(id = R.mipmap.ic_launcher),
+                painter = androidx.compose.ui.res.painterResource(id = R.drawable.ic_launcher_image),
                 contentDescription = "Logo AksiPhoto",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
