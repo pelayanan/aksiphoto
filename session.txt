@@ -1,0 +1,40 @@
+# AksiPhoto — Riwayat Session Koding
+Repo: https://github.com/pelayanan/aksiphoto
+Project: AksiPhoto — Open Source Image Editor Android (Kotlin + Jetpack Compose)
+Package: id.aksisoft.aksiphoto | alias key: tukangdigital | pass: MakMakPandugo
+
+---
+
+## [SESSION 1 — 25 Oktober 2026]
+
+### instruksi user (ringkasan)
+- Login GitHub pakai token, repo pelayanan/aksiphoto adalah project aktif.
+- Baca repo dulu; jika belum ada build → build, jika sudah ada → JANGAN build.
+- Build pakai tukangdigital.keystore (password MakMakPandugo), kalau build: naikkan
+  versionCode & versionName, wajib targetSdk 36 (Android 16, kebijakan Play mulai
+  Agustus 2026), debug harus sukses lalu release (R8 minify) juga harus lolos.
+- Output: APK dan AAB, upload/push ke repo, timpa file lama (jangan buat nama file baru).
+- Setiap update session koding: screenshot semua halaman yang berubah, kirim ke Telegram.
+- Cek logo: kalau belum ada, buat. Banner Play 1024x500: kalau belum ada, buat
+  (HTML → JPG/PNG), kirim ke Telegram juga.
+- Simpan percakapan tiap session ke session.txt (append terus) lalu push ke repo.
+
+### hasiL pengecekan (repo sudah berisi semua)
+- Build release sudah ada : AksiPhoto-release.apk (~1.8MB) + AksiPhoto-release.aab (~4MB)
+- Versi terakhir          : v1.1.3, versionCode 5
+- targetSdk / compileSdk  : 36 ✅ (sudah memenuhi kebijakan Play API 36)
+- R8 minify + shrinkRes   : aktif di buildTypes.release ✅
+- Keystore                : keystore/tukangdigital.keystore ✅
+- Logo                    : store/logo_512.png, store/logo_master.png, adaptive icon ✅
+- Banner 1024x500         : store/banner_1024x500.png ✅
+- Screenshot store        : store/screenshots/ (01_home, 02_editor, 03_batch,
+                            04_folder, 05_ekspor, 06_tentang) ✅
+
+### aksi session ini
+- Clone repo, audit lengkap: tidak ada yang perlu dibuat/direbuild.
+- TIDAK build (sudah ada build, sesuai instruksi user).
+- Tidak ada perubahan kode → tidak ada screenshot baru.
+- Membuat session.txt (file ini) dan push ke repo.
+
+### status
+Selesai — tidak ada build baru diperlukan. Menunggu request perubahan berikutnya.
